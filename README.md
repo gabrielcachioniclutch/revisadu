@@ -1,70 +1,156 @@
-# Getting Started with Create React App
+# RevisadU! - Sua Revisão, Seu Controle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Sobre o Projeto
 
-## Available Scripts
+RevisadU! é uma plataforma inovadora que conecta proprietários de veículos e mecânicos, oferecendo transparência e controle total sobre o processo de manutenção automotiva.
 
-In the project directory, you can run:
+### Conceito do "U!"
+- **Você**: Cliente no centro, com total controle
+- **União**: Conexão transparente entre proprietários, mecânicos e informações
+- **Unidade**: Um ponto único e confiável para todo o histórico e conhecimento automotivo
 
-### `npm start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend
+- Node.js
+- Express.js
+- PostgreSQL
+- JWT para autenticação
+- Passport.js para OAuth (Google, Facebook)
+- Resend para envio de e-mails transacionais
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Frontend
+- React.js
+- Material-UI
+- React Router
+- Axios para requisições HTTP
 
-### `npm test`
+## Estrutura do Projeto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+revisadu_app/
+├── client/                 # Frontend React
+├── server/                 # Backend Node.js/Express
+├── database/              # Scripts e configurações do banco
+├── public/                # Arquivos estáticos
+└── docs/                  # Documentação
+```
 
-### `npm run build`
+## Instalação e Configuração
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Pré-requisitos
+- Node.js (versão 16 ou superior)
+- PostgreSQL (versão 12 ou superior)
+- npm ou yarn
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Clone e Instale as Dependências
+```bash
+# Instalar dependências do backend
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Instalar dependências do frontend
+cd client && npm install
+```
 
-### `npm run eject`
+### 2. Configuração do Banco de Dados
+```bash
+# Criar banco de dados PostgreSQL
+createdb revisadu_db
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Executar migrações
+npm run db:migrate
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3. Configuração de Variáveis de Ambiente
+Criar arquivo `.env` na raiz do projeto:
+```env
+# Servidor
+PORT=5000
+NODE_ENV=development
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Banco de Dados
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=revisadu_db
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# JWT
+JWT_SECRET=sua_chave_secreta_jwt
 
-## Learn More
+# E-mail (Resend)
+RESEND_API_KEY=sua_chave_resend
+EMAIL_FROM=noreply@revisadu.com.br
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# OAuth
+GOOGLE_CLIENT_ID=seu_google_client_id
+GOOGLE_CLIENT_SECRET=seu_google_client_secret
+FACEBOOK_APP_ID=seu_facebook_app_id
+FACEBOOK_APP_SECRET=seu_facebook_app_secret
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4. Executar o Projeto
+```bash
+# Desenvolvimento (backend + frontend)
+npm run dev
 
-### Code Splitting
+# Apenas backend
+npm run server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Apenas frontend
+cd client && npm start
+```
 
-### Analyzing the Bundle Size
+## Funcionalidades Principais
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Para Mecânicos
+- Cadastro e perfil da oficina
+- Registro de manutenções
+- Upload de evidências
+- Histórico de serviços
 
-### Making a Progressive Web App
+### Para Clientes
+- Cadastro de veículos
+- Aprovação/rejeição de manutenções
+- Histórico completo de serviços
+- Avaliação de mecânicos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## API Endpoints
 
-### Advanced Configuration
+### Autenticação
+- `POST /api/auth/register` - Cadastro de usuário
+- `POST /api/auth/login` - Login
+- `POST /api/auth/forgot-password` - Recuperação de senha
+- `GET /api/auth/google` - Login com Google
+- `GET /api/auth/facebook` - Login com Facebook
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Mecânicos
+- `GET /api/mechanics/profile` - Perfil do mecânico
+- `PUT /api/mechanics/profile` - Atualizar perfil
+- `POST /api/mechanics/maintenance` - Registrar manutenção
+- `GET /api/mechanics/maintenance` - Listar manutenções
 
-### Deployment
+### Clientes
+- `GET /api/clients/vehicles` - Listar veículos
+- `POST /api/clients/vehicles` - Cadastrar veículo
+- `GET /api/clients/maintenance` - Listar manutenções
+- `PUT /api/clients/maintenance/:id/approve` - Aprovar manutenção
+- `PUT /api/clients/maintenance/:id/reject` - Rejeitar manutenção
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contribuição
 
-### `npm run build` fails to minify
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Contato
+
+RevisadU! Team - [contato@revisadu.com.br](mailto:contato@revisadu.com.br)
+
+Link do Projeto: [https://github.com/revisadu/revisadu-app](https://github.com/revisadu/revisadu-app) 

@@ -1,0 +1,3 @@
+Cliente: cliente@exemplo.com / admin123
+Mecânico: mecanico@exemplo.com / admin123
+Admin: admin@revisadu.com / admin123
